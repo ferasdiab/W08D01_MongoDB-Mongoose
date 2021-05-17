@@ -48,13 +48,9 @@ app.put("/update/todo/:task", (req, res) => {
     const taskin = req.params.task
     const { task, description, deadline, isCompleted, priority } = req.body;
 
-    todoModel.findOneAndUpdate({task:taskin}, { task, description, deadline, isCompleted, priority }).then((result)=>{
-        todoModel.find({task:task}).then((result2)=>{
-            res.status(200);
-            res.json(result2);
-        }).catch((err) => {
-            res.send(err);
-          })
+    todoModel.findOneAndUpdate({task:taskin}, { task, description, deadline, isCompleted, priority },  {new:true}  ).then((result)=>{
+        res.status(200)
+        res.json(result)
     }).catch((err) => {
         res.send(err);
       });
